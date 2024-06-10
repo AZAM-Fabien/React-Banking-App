@@ -7,6 +7,7 @@ import Footer from "./components/footer/footer.jsx";
 import Acceuil from "./pages/acceuil.jsx";
 import Sign_in from "./pages/sign_in.jsx";
 import Profile from "./pages/profile.jsx";
+import PrivateRoute from "./features/verification.jsx";
 // import Error from "./pages/Error/Error.jsx";
 
 function App() {
@@ -17,8 +18,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Acceuil />} />
           <Route path="/sign-in" element={<Sign_in />} />
-          <Route path="/profile" element={<Profile />} />
-          {/* proteger la route profile en fonction de isConnected */}
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute isConnected={store.getState().connect.isConnected}>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          {/* Fallback route for unauthorized access */}
+          <Route path="/error" element={<Error />} />
         </Routes>
         <Footer />
       </Router>
