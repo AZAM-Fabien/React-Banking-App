@@ -1,26 +1,18 @@
 import InputWrapper from "../components/inputWrapper/inputWrapper.jsx";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Slices/signInSlices.jsx";
 import { useNavigate } from "react-router-dom";
+import { addEmail, addPassword } from "../Slices/logInSlice.jsx";
 
 function LogIn() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const authState = useSelector((state) => state.auth);
-  console.log(authState);
+  const connectState = useSelector((state) => state.connect);
+  console.log(connectState);
 
-  const handleUsernameChange = (value) => {
-    setEmail(value);
-    console.log(value);
-  };
-
-  const handlePasswordChange = (value) => {
-    setPassword(value);
-  };
+  const identityState = useSelector((state) => state.identity);
+  console.log(identityState);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,14 +23,12 @@ function LogIn() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: email, password: password }),
+        body: JSON.stringify({ email: identityState.email, password: identityState.password }),
       });
       console.log("Reponse de l'API :", response);
       if (response.ok) {
         const data = await response.json();
-        dispatch(
-          login({ email: email, password: password, token: data.body.token })
-        );
+        dispatch(login(data.body.token));
         console.log("Connexion réussie ! Données reçues :", data);
         navigate("/profile");
       } else {
@@ -53,18 +43,16 @@ function LogIn() {
   return (
     <form onSubmit={handleLogin}>
       <InputWrapper
-        label="Username"
-        id="username"
+        label="email"
+        id="email"
         type="text"
-        value={email}
-        onChange={handleUsernameChange}
+        onChange={(e) =>dispatch(addEmail(e.target.value))}
       />
       <InputWrapper
         label="Password"
         id="password"
         type="password"
-        value={password}
-        onChange={handlePasswordChange}
+        onChange={(e) =>dispatch(addPassword(e.target.value))}
       />
       <div className="input-remember">
         <input type="checkbox" id="remember-me" />

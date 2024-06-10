@@ -1,27 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  email: null,
-  password: null,
   token: null,
-  isAuthenticated: false,
+  isConnected: false,
 };
 
 const signInSlice = createSlice({
-  name: "auth",
+  name: "connect",
   initialState,
   reducers: {
     login: (state, action) => {
-      state.email = action.payload.email;
-      state.password = action.payload.password;
-      state.token = action.payload.token;
-      state.isAuthenticated = true;
+      state.token = action.payload;
+      state.isConnected = true;
     },
     logout: (state) => {
-      state.email = null;
-      state.password = null;
       state.token = null;
-      state.isAuthenticated = false;
+      state.isConnected = false;
     },
   },
 });

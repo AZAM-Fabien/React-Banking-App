@@ -17,7 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Acceuil />} />
           <Route path="/sign-in" element={<Sign_in />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
+          {/* proteger la route profile en fonction de isConnected */}
         </Routes>
         <Footer />
       </Router>
