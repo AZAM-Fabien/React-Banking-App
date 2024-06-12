@@ -1,12 +1,19 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { UserInfoAsync } from "../features/UserInfoThunk";
+import ProfileHeader from "../components/profileHeader/profileHeader";
 
+function Profile () {  
 
-function Profile () {    
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(UserInfoAsync());
+  }, [dispatch]);
+
     return (
         <main className="main bg-dark">
-      <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
-        <button className="edit-button">Edit Name</button>
-      </div>
+      <ProfileHeader/>
       <h2 className="sr-only">Accounts</h2>
       <section className="account">
         <div className="account-content-wrapper">

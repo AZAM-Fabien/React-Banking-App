@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   email: null,
   password: null,
+  checked: false,
 };
 
 const logInSlice = createSlice({
@@ -19,8 +20,14 @@ const logInSlice = createSlice({
       state.email = null;
       state.password = null;
     },
+    checkCheckbox: (state) => {
+      state.checked = !state.checked;
+    },
+    defaultChecked: (state) => {
+      state.checked = true;
+    },
   },
 });
 
-export const { addEmail, addPassword, removeIdentity } = logInSlice.actions;
+export const { addEmail, addPassword, removeIdentity, checkCheckbox, defaultChecked } = logInSlice.actions;
 export default logInSlice.reducer;
