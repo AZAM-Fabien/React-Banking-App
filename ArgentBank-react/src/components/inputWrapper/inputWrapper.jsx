@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-const InputWrapper = ({ label, id, type, ...rest }) => {
+const InputWrapper = ({ className, label, id, type, ...rest }) => {
   return (
-    <div className="input-wrapper">
+    <div className={className}>
       <label htmlFor={id}>{label}</label>
       <input type={type} id={id} {...rest} />
     </div>
@@ -10,6 +10,7 @@ const InputWrapper = ({ label, id, type, ...rest }) => {
 };
 
 InputWrapper.propTypes = {
+  className: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,

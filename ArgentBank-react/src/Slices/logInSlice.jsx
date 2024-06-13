@@ -22,9 +22,12 @@ const logInSlice = createSlice({
     },
     checkCheckbox: (state) => {
       state.checked = !state.checked;
-    },
+      if (state.checked === false) {
+        window.localStorage.removeItem("checked");
+    }},
     defaultChecked: (state) => {
       state.checked = true;
+      console.log('checked test', state.checked)
     },
   },
 });

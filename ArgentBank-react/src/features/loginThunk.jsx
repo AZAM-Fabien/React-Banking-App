@@ -26,6 +26,7 @@ export const loginAsync = createAsyncThunk(
     if (response.ok) {
       const data = await response.json();
       dispatch(login(data.body.token));
+      window.sessionStorage.setItem("connected", true), window.sessionStorage.setItem("tokenSession", data.body.token), console.log("token", data.body.token)
       return data.body.token;
     }
   }

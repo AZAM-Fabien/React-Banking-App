@@ -9,7 +9,7 @@ function Profile () {
 
   useEffect(() => {
     dispatch(UserInfoAsync());
-  }, [dispatch]);
+  }, [dispatch ]);
 
     return (
         <main className="main bg-dark">

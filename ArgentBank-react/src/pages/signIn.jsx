@@ -17,6 +17,7 @@ function SignIn() {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.userConnection.connection);
   const { email, checked } = useSelector((state) => state.identity);
+  const checkedInLocalStorage = localStorage?.getItem("checked");
   const emailLocale = localStorage?.getItem("email") ?? "";
 
   useEffect(() => {
@@ -34,8 +35,11 @@ function SignIn() {
     }
   }, [dispatch, emailLocale]);
 
-  
-  
+  useEffect(() => {
+    if (checked === false && ( checkedInLocalStorage == "false" || checkedInLocalStorage == null)) {
+      window.localStorage?.removeItem("email");
+    }
+  }, [checked, checkedInLocalStorage]);
 
   const navigate = useNavigate();
   const handleSubmit = (event) => {
@@ -46,13 +50,8 @@ function SignIn() {
     dispatch(reset());
 
     if (checked == true) {
-      localStorage.setItem("email", email);
-      localStorage.setItem("checked", true);
-    }
-
-    if (checked == false) {
-      localStorage?.removeItem("email");
-      localStorage?.removeItem("checked");
+      window.localStorage.setItem("email", email);
+      window.localStorage.setItem("checked", true);
     }
   };
 
@@ -69,6 +68,7 @@ function SignIn() {
           <h1>Sign In</h1>
           <form onSubmit={handleSubmit}>
             <InputWrapper
+              className="input-wrapper"
               label="email"
               id="email"
               type="text"
@@ -76,6 +76,7 @@ function SignIn() {
               onChange={(e) => dispatch(addEmail(e.target.value))}
             />
             <InputWrapper
+              className="input-wrapper"
               label="Password"
               id="password"
               type="password"
@@ -89,6 +90,7 @@ function SignIn() {
                   onChange={handleCheck}
                   defaultChecked
                 />
+
               ) : (
                 <input
                   type="checkbox"

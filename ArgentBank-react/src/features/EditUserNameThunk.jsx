@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserInfo } from "../Slices/userInfoSlice";
 
-export const UserInfoAsync = createAsyncThunk(
-  "user/retrieveInfo",
-  async (_, { dispatch, getState }) => {
+
+export const EditUserNameAsync = createAsyncThunk(
+  "user/putUserName",
+  async (_, { getState }) => {
+    const newUserName = getState().userInfo.newUserName;
     const token = getState().connect.token;
     const isConnected = getState().connect.isConnected;
     const tokenSession = window.sessionStorage.getItem("tokenSession");
@@ -19,12 +20,16 @@ export const UserInfoAsync = createAsyncThunk(
       chosenToken = token;
     }
 
-    const response = await fetch("http://localhost:3001/api/v1/user/profile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${chosenToken}`,
-      },
+
+    const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${chosenToken}` 
+        },
+        body: JSON.stringify({
+            userName: newUserName,
+          }),
     });
 
     if (!response.ok) {
@@ -34,37 +39,31 @@ export const UserInfoAsync = createAsyncThunk(
 
     if (response.ok) {
       const data = await response.json();
-      dispatch(
-        getUserInfo({
-          userName: data.body.userName,
-          firstName: data.body.firstName,
-          lastName: data.body.lastName,
-        })
-      );
+      console.log(data.body);
       return data.body;
     }
   }
 );
 
-const UserInfoAsyncSlice = createSlice({
-  name: "UserInfoAsync",
+const EditUserNameAsyncSlice = createSlice({
+  name: "EditUserNameAsync",
   initialState: {
-    status: null,
-    data: {},
-    error: {},
+      status: null,
+      data: {},
+      error: {},
   },
-  reducers: {},
+  reducers: {  },
 
   extraReducers: (builder) => {
     builder
-      .addCase(UserInfoAsync.pending, (state) => {
+      .addCase(EditUserNameAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(UserInfoAsync.fulfilled, (state, action) => {
+      .addCase(EditUserNameAsync.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload;
       })
-      .addCase(UserInfoAsync.rejected, (state, action) => {
+      .addCase(EditUserNameAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         console.error("Error:", action.error.message);
@@ -72,4 +71,4 @@ const UserInfoAsyncSlice = createSlice({
   },
 });
 
-export default UserInfoAsyncSlice.reducer;
+export default EditUserNameAsyncSlice.reducer;

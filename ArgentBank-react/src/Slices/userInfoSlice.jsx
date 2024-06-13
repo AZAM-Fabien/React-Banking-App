@@ -4,7 +4,8 @@ const initialState = {
   userName: null,
   firstName: null,
   lastName: null,
-  edit: false
+  edit: false,
+  newUserName: null,
 };
 
 const userInfoSlice = createSlice({
@@ -25,7 +26,15 @@ const userInfoSlice = createSlice({
     triggerEdit: (state) => {
       state.edit = !state.edit;
     },
+
+    addNewUserName: (state, action) => {
+      state.newUserName = action.payload;
+    },
+
+    editUserName: (state) => {
+      state.userName = state.newUserName;
+    },
   },
 });
-export const { getUserInfo, removeUserInfo, triggerEdit } = userInfoSlice.actions;
+export const { getUserInfo, removeUserInfo, triggerEdit, addNewUserName, editUserName } = userInfoSlice.actions;
 export default userInfoSlice.reducer;

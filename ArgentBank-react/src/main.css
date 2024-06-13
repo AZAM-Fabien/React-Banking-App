@@ -172,7 +172,7 @@ body {
   color: #fff;
 }
 
-.sign-in-content {
+ .sign-in-content {
   box-sizing: border-box;
   background-color: white;
   width: 300px;
@@ -200,7 +200,7 @@ body {
   margin-bottom: 1rem;
 }
 
-.input-wrapper label {
+.input-wrapper label, .input-wrapper-edit-profile label, .input-wrapper-edit-profile-blurred label{
   font-weight: bold;
 }
 
@@ -271,6 +271,7 @@ body {
   margin-bottom: 2rem;
 }
 
+
 .transaction-button {
   display: block;
   width: 100%;
@@ -340,3 +341,44 @@ body {
   color:black
 }
 
+
+.header-edit {
+  color: #fff;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-user-content{
+  box-sizing: border-box;
+  width: 300px;
+}
+
+.input-wrapper-edit-profile, .input-wrapper-edit-profile-blurred {
+  display: flex;
+  flex-direction: row ;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-wrapper-edit-profile input, .input-wrapper-edit-profile-blurred input {
+  margin-left: 1rem;
+  padding: 10px;
+}
+
+.input-wrapper-edit-profile-blurred input{
+  background-color: darkgray;
+}
+
+.btn-edit-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.btn-edit-profile button {
+  width: 100px;
+}
