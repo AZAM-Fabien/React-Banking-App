@@ -1,20 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../Slices/signInSlices";
 import { removeIdentity } from "../../Slices/logInSlice";
 import { removeUserInfo } from "../../Slices/userInfoSlice";
 
+
 function Header() {
+  const navigate = useNavigate();
   const { isConnected } = useSelector((state) => state.connect);
-  const connected = sessionStorage?.getItem("connected");
-  const { userName } = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
+  let connected = sessionStorage.getItem("connected");
+  let { userName } = useSelector((state) => state.userInfo);
+  if (!userName) {
+    userName = window.sessionStorage.getItem("userName");
+  }
 
   const handleLogOut = () => {
-    dispatch(logout());
+    window.sessionStorage.clear();
     dispatch(removeIdentity());
     dispatch(removeUserInfo());
-    window.sessionStorage.clear();
+    dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -27,8 +33,8 @@ function Header() {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </NavLink>
-      <div>
-        {(isConnected === true || connected === "true") ? (
+      <div className="main-nav-items">
+        {(isConnected === true  || connected === "true") ? (
           <>
             <NavLink className="main-nav-item" to="/profile">
               <i className="fa fa-user-circle"></i>

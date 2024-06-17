@@ -1,6 +1,6 @@
 import FeaturesItem from "../components/featureItem/featureItem.jsx";
 
-function Acceuil() {
+function Home() {
   return (
     <main>
       <div className="hero">
@@ -39,4 +39,4 @@ function Acceuil() {
     </main>
   );
 }
-export default Acceuil;
+export default Home;

@@ -17,6 +17,18 @@ const userInfoSlice = createSlice({
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
     },
+    addLastName: (state, action) => {
+      state.lastName = action.payload;
+    },
+
+    addFirstName: (state, action) => {
+      state.firstName = action.payload;
+    },
+    
+    addUserName: (state, action) => {
+      state.userName = action.payload;
+    },
+    
     removeUserInfo: (state) => {
       state.userName = null;
       state.firstName = null;
@@ -36,5 +48,5 @@ const userInfoSlice = createSlice({
     },
   },
 });
-export const { getUserInfo, removeUserInfo, triggerEdit, addNewUserName, editUserName } = userInfoSlice.actions;
+export const { getUserInfo, addLastName, addFirstName, addUserName, removeUserInfo, triggerEdit, addNewUserName, editUserName } = userInfoSlice.actions;
 export default userInfoSlice.reducer;

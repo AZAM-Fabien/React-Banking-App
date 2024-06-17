@@ -1,19 +1,21 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserInfoAsync } from "../features/UserInfoThunk";
-import ProfileHeader from "../components/profileHeader/profileHeader";
+import ProfileComponent from "../components/ProfileComponent/ProfileComponent";
 
-function Profile () {  
-
+function Profile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(UserInfoAsync());
-  }, [dispatch ]);
+  }, [dispatch]);
 
-    return (
-        <main className="main bg-dark">
-      <ProfileHeader/>
+  const { userName } = useSelector((state) => state.userInfo);
+  window.sessionStorage.setItem("userName", userName);
+  
+  return (
+    <main className="main bg-dark">
+      <ProfileComponent />
       <h2 className="sr-only">Accounts</h2>
       <section className="account">
         <div className="account-content-wrapper">
@@ -46,7 +48,7 @@ function Profile () {
         </div>
       </section>
     </main>
-    );
+  );
 }
 
 export default Profile;

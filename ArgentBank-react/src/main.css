@@ -375,10 +375,15 @@ body {
 .btn-edit-profile {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 2rem;
 }
 
 .btn-edit-profile button {
   width: 100px;
+}
+
+.main-nav-items {
+  display: flex;
+  align-items: center;
 }

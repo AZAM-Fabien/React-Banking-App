@@ -8,7 +8,7 @@ import {
   checkCheckbox,
   defaultChecked,
 } from "../Slices/logInSlice.jsx";
-import { loginAsync, reset } from "../features/loginThunk.jsx";
+import { loginAsync } from "../features/loginThunk.jsx";
 import { openModal } from "../Slices/modalSlice.jsx";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +27,7 @@ function SignIn() {
   }, [dispatch, error]);
 
   useEffect(() => {
-    if (localStorage?.getItem("checked") == "true") {
+    if (localStorage?.getItem("checked") === "true") {
       dispatch(defaultChecked());
     }
     if (emailLocale !== "") {
@@ -36,7 +36,10 @@ function SignIn() {
   }, [dispatch, emailLocale]);
 
   useEffect(() => {
-    if (checked === false && ( checkedInLocalStorage == "false" || checkedInLocalStorage == null)) {
+    if (
+      checked === false &&
+      (checkedInLocalStorage == "false" || checkedInLocalStorage == null)
+    ) {
       window.localStorage?.removeItem("email");
     }
   }, [checked, checkedInLocalStorage]);
@@ -47,7 +50,6 @@ function SignIn() {
     dispatch(loginAsync())
       .unwrap()
       .then(() => navigate("/profile"));
-    dispatch(reset());
 
     if (checked == true) {
       window.localStorage.setItem("email", email);
@@ -61,7 +63,7 @@ function SignIn() {
 
   return (
     <>
-      {isOpen && <Modal />}
+      {isOpen && <Modal errorMessage={error} />}
       <main className="main bg-dark">
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
@@ -72,6 +74,7 @@ function SignIn() {
               label="email"
               id="email"
               type="text"
+              required
               defaultValue={emailLocale}
               onChange={(e) => dispatch(addEmail(e.target.value))}
             />
@@ -80,6 +83,7 @@ function SignIn() {
               label="Password"
               id="password"
               type="password"
+              required
               onChange={(e) => dispatch(addPassword(e.target.value))}
             />
             <div className="input-remember">
@@ -90,7 +94,6 @@ function SignIn() {
                   onChange={handleCheck}
                   defaultChecked
                 />
-
               ) : (
                 <input
                   type="checkbox"
@@ -102,6 +105,13 @@ function SignIn() {
               <label htmlFor="remember-me">Remember me</label>
             </div>
             <button className="sign-in-button">Sign In</button>
+            <button
+              type="button"
+              className="sign-in-button"
+              onClick={() => navigate("/sign-up")}
+            >
+              Sign-up
+            </button>
           </form>
         </section>
       </main>

@@ -1,25 +1,28 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addNewUserName, editUserName, triggerEdit } from "../../Slices/userInfoSlice";
+import {
+  addNewUserName,
+  editUserName,
+  triggerEdit,
+} from "../../Slices/userInfoSlice.jsx";
 import InputWrapper from "../inputWrapper/inputWrapper.jsx";
 import { EditUserNameAsync } from "../../features/EditUserNameThunk.jsx";
 
-const ProfileHeader = () => {
+const ProfileComponent = () => {
   const dispatch = useDispatch();
-  const { userName, firstName, lastName, edit , newUserName} = useSelector(
+  const { userName, firstName, lastName, edit, newUserName } = useSelector(
     (state) => state.userInfo
   );
 
   const handleChangeUserName = (e) => {
     e.preventDefault();
-    console.log("userName", newUserName);
     dispatch(EditUserNameAsync())
       .unwrap()
-      .then(() => dispatch(triggerEdit()), dispatch(editUserName(newUserName))), console.log("userName", userName);
+      .then(() => dispatch(triggerEdit()), dispatch(editUserName(newUserName)));
   };
 
   return (
     <>
-      {edit == true ? (
+      {edit ? (
         <>
           <div className="header-edit">
             <section className="edit-user-content">
@@ -87,4 +90,4 @@ const ProfileHeader = () => {
   );
 };
 
-export default ProfileHeader;
+export default ProfileComponent;

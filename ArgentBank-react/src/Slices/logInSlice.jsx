@@ -27,7 +27,6 @@ const logInSlice = createSlice({
     }},
     defaultChecked: (state) => {
       state.checked = true;
-      console.log('checked test', state.checked)
     },
   },
 });

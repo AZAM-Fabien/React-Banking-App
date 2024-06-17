@@ -34,6 +34,7 @@ export const UserInfoAsync = createAsyncThunk(
 
     if (response.ok) {
       const data = await response.json();
+      window.sessionStorage.setItem("userName", data.body.userName);
       dispatch(
         getUserInfo({
           userName: data.body.userName,
